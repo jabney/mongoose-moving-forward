@@ -1,4 +1,7 @@
-# Mongoose Continued
+# Mongoose Moving Forward
+https://app.pluralsight.com/library/courses/mongoosejs-moving-forward/table-of-contents
+
+## Mongoose Continued
 An adaptation of [Davide Violante's Angular Full Stack](https://github.com/DavideViolante/Angular-Full-Stack) project modified for use with Pluralsight's [Moving Forward with Mongoose](https://app.pluralsight.com/library/courses/mongoosejs-moving-forward/table-of-contents) course by Mark Scott.
 
 This project represents the starter project for **Module 4** of **Moving Forward with Mongoose**.
