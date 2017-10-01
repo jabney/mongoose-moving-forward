@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+#navbar {
+  display: block;
+  a {
+    color: lightgray;
+  }
+
+  .navbar-nav {
+    float: right;
+    margin-bottom: 0;
+  }
+}

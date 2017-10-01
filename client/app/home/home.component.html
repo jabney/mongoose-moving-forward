@@ -1,0 +1,115 @@
+<div class="card" *ngIf="isLoading">
+  <h4 class="card-header">Loading...</h4>
+  <div class="card-block text-xs-center">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+  </div>
+</div>
+
+<div class="card" *ngIf="!isLoading && !isEditing && !isAddNew">
+  <div class="card-header">
+    <div class="pull-left">
+      <h4>Stored Items ({{items.length}} with total est. value {{estValueSum | currency:'USD':true}})</h4>
+    </div>
+    <div class="pull-right">
+        <button class="btn btn-sm btn-primary" (click)="enableAddNew()"><i class="fa fa-plus-square-o"></i> Add New</button>
+    </div>    
+  </div>
+  
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-default">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Est. Value</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="items.length === 0">
+        <tr>
+          <td colspan="5">There are no storage items in the DB. Add a new item below.</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!isEditing">
+        <tr *ngFor="let item of items">
+          <td>
+              {{item.name}}
+          </td>
+          <td>{{item.description}}</td>
+          <td>{{item.category}}</td>
+          <td>{{item.estvalue | currency:'USD':true}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="enableEditing(item)"><i class="fa fa-pencil"></i> Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteItem(item)"><i class="fa fa-trash"></i> Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div [hidden]="!infoMsg.body" class="alert alert-{{infoMsg.type}} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Message:</strong> {{infoMsg.body}}
+    </div>
+  </div>
+</div>
+
+<!-- Add New Item -->
+<div class="card" *ngIf="!isEditing && isAddNew">
+  <h4 class="card-header">Add new item to storage...</h4>
+  <form [formGroup]="addItemForm" (ngSubmit)="addItem()" style="padding: 10px;">
+    <div class="form-group col-3">
+      <label for="addItemName">Item Name</label>
+      <input class="form-control" type="text" name="name" formControlName="name" placeholder="Name">
+    </div>
+    <div class="form-group col-6">
+      <label for="addItemDescription">Description</label>
+      <input class="form-control" type="text" name="description" formControlName="description" placeholder="Description">
+    </div>
+    <div class="form-group col-3">
+      <label for="addItemCategory">Category</label>
+      <input class="form-control" type="text" name="category" formControlName="category" placeholder="Category">
+    </div>
+    <div class="form-group col-3">
+      <label for="addItemEstValue">Estimate Value</label>
+      <input class="form-control" type="number" name="estvalue" formControlName="estvalue" placeholder="Est. Value" step="1" min="0">
+      <small id="addItemEstValueTip" class="form-text text-muted">Round to the nearest whole number.</small>
+    </div>
+    
+    <div style="padding-left: 20px;">
+      <button class="btn btn-primary" type="submit" [disabled]="!addItemForm.valid"><i class="fa fa-floppy-o"></i> Add</button>
+      <button class="btn btn-warning" (click)="cancelAddNew()"><i class="fa fa-times"></i> Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!-- Edit Existing Item -->
+<div class="card" *ngIf="isEditing && !isAddNew">
+  <h4 class="card-header">Edit Item</h4>
+  <form [formGroup]="editItemForm" (ngSubmit)="editItem(item)" style="padding: 10px;">
+  <div class="form-group col-3">
+      <label for="editItemName">Item Name</label>
+      <input type="text" class="form-control" id="editItemName" [(ngModel)]="item.name" formControlName="name" placeholder="Item Name">
+    </div>
+     <div class="form-group col-6">
+      <label for="editItemDescription">Description</label>
+      <input type="text" class="form-control" id="editItemDescription" [(ngModel)]="item.description" formControlName="description" placeholder="Description">
+    </div>
+    <div class="form-group col-3">
+      <label for="editItemCategory">Category</label>
+      <input type="text" class="form-control" id="editItemCategory" [(ngModel)]="item.category" formControlName="category" placeholder="Category">
+    </div>
+    <div class="form-group col-3">
+      <label for="editItemEstValue">Estimate Value</label>
+      <input class="form-control" type="number" name="editItemEstValue" [(ngModel)]="item.estvalue" formControlName="estvalue" 
+        placeholder="Est. Value" step="1" min="0" aria-describedby="addItemEstValueTip">
+      <small id="editItemEstValueTip" class="form-text text-muted">Round to the nearest whole number.</small>
+    </div>
+    
+    <div style="padding-left: 20px;">
+      <button class="btn btn-primary" type="submit" [disabled]="!editItemForm.valid"><i class="fa fa-floppy-o"></i> Save</button>
+      <button class="btn btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i> Cancel</button>
+    </div>   
+  </form>
+</div>
