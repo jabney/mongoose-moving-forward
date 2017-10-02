@@ -1,4 +1,6 @@
 import { Item } from '../models/item.model'
+import { itemSaveHelper } from '../models/item.save'
+import { itemUpdateHelper } from '../models/item.update'
 
 export default function (app) {
 
@@ -20,11 +22,13 @@ export default function (app) {
 
   // create
   app.post('/api/item', function (req, res) {
-    const obj = new Item(req.body)
-    obj.save(function(err, _obj) {
-      if (err) { return console.error(err) }
-      res.status(200).json(_obj)
-    })
+    itemSaveHelper(req, res)
+
+    // const obj = new Item(req.body)
+    // obj.save(function(err, _obj) {
+    //   if (err) { return console.error(err) }
+    //   res.status(200).json(_obj)
+    // })
   })
 
   // find by id
@@ -37,11 +41,12 @@ export default function (app) {
 
   // update by id
   app.put('/api/item/:id', function (req, res) {
-    const opts = { runValidators: true }
-    Item.findOneAndUpdate({_id: req.params.id}, req.body, opts, function(err) {
-      if (err) { return console.error(err) }
-      res.sendStatus(200)
-    })
+    itemUpdateHelper(req, res)
+    // const opts = { runValidators: true }
+    // Item.findOneAndUpdate({_id: req.params.id}, req.body, opts, function(err) {
+    //   if (err) { return console.error(err) }
+    //   res.sendStatus(200)
+    // })
   })
 
   // delete by id
