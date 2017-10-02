@@ -4,6 +4,8 @@ import * as express from 'express'
 import * as morgan from 'morgan'
 import * as mongoose from 'mongoose'
 import * as path from 'path'
+import * as bluebird from 'bluebird'
+import * as q from 'q'
 
 import itemApi from './item/item.api'
 import searchApi from './search/search.api'
@@ -25,7 +27,9 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 const db = mongoose.connection as any
-(<any>mongoose).Promise = global.Promise
+// (<any>mongoose).Promise = global.Promise
+// (<any>mongoose).Promise = bluebird
+(<any>mongoose).Promise = q.Promise
 
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {
