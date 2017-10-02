@@ -3,7 +3,7 @@ import * as timestampsPlugin from 'mongoose-times'
 // import { updatedOnPlugin } from '../plugins/updated-on'
 import { valueIndicatorPlugin } from '../plugins/value-indicator'
 
-const itemSchema = mongoose.Schema({
+const itemSchema = new mongoose.Schema({
     name: String,
     description: String,
     category: String,
