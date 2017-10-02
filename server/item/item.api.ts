@@ -7,10 +7,13 @@ export default function (app) {
 
   app.get('/api/items', function (req, res) {
     // {estvalue: { $gte: 100}}
-    Item.find({}, function (err, docs) {
-      if (err) { return console.error(err) }
-      res.json(docs)
-    })
+    Item.find({}).exec()
+      .then((docs) => res.json(docs))
+      .catch((err) => console.error(err))
+    // Item.find({}, function (err, docs) {
+    //   if (err) { return console.error(err) }
+    //   res.json(docs)
+    // })
   })
 
   // count all
