@@ -1,6 +1,7 @@
 import { Item } from '../models/item.model'
 import { itemSaveHelper } from '../models/item.save'
 import { itemUpdateHelper } from '../models/item.update'
+import { SpecialItem } from '../models/special-item.model'
 
 export default function (app) {
 
@@ -69,5 +70,13 @@ export default function (app) {
         if (err) { return console.error(err) }
         res.json(result)
       })
+  })
+
+  app.post('/api/specialitem', function (req, res) {
+    const obj = new SpecialItem(req.body)
+    obj.save(function (err, _obj) {
+      if (err) { return console.error(err) }
+      res.status(200).json(_obj)
+    })
   })
 }
