@@ -37,7 +37,8 @@ export default function (app) {
 
   // update by id
   app.put('/api/item/:id', function (req, res) {
-    Item.findOneAndUpdate({_id: req.params.id}, req.body, function(err) {
+    const opts = { runValidators: true }
+    Item.findOneAndUpdate({_id: req.params.id}, req.body, opts, function(err) {
       if (err) { return console.error(err) }
       res.sendStatus(200)
     })
