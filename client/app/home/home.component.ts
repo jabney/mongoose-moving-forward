@@ -37,14 +37,16 @@ export class HomeComponent implements OnInit {
       'name': ['', Validators.required],
       'description': ['', Validators.required],
       'category': ['', Validators.required],
-      'estvalue': ['', Validators.minLength(1)]
+      'estvalue': ['', Validators.minLength(1)],
+      'hazardCode': ['']
     })
 
     this.editItemForm = this.formBuilder.group({
       'name': ['', Validators.required],
       'description': ['', Validators.required],
       'category': ['', Validators.required],
-      'estvalue': ['', Validators.minLength(1)]
+      'estvalue': ['', Validators.minLength(1)],
+      'hazardCode': ['']
     })
 
     this.getValueSum()

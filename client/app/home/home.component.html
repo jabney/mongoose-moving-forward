@@ -12,9 +12,9 @@
     </div>
     <div class="pull-right">
         <button class="btn btn-sm btn-primary" (click)="enableAddNew()"><i class="fa fa-plus-square-o"></i> Add New</button>
-    </div>    
+    </div>
   </div>
-  
+
   <div class="card-block">
     <table class="table table-bordered table-striped">
       <thead class="thead-default">
@@ -34,7 +34,11 @@
       <tbody *ngIf="!isEditing">
         <tr *ngFor="let item of items">
           <td>
-              {{item.name}}
+            <i *ngIf="item.hazardCode" class="fa fa-exclamation-triangle fa-2"
+              title="Item is hazardous: Code {{ item.hazardCode }}"></i>
+            <i *ngIf="item.requiresInsurance" class="fa fa-university"
+              title="NOTE: Insurance required on this item" aria-hidden="true"></i>
+            {{item.name}}
           </td>
           <td>{{item.description}}</td>
           <td>{{item.category}}</td>
@@ -76,7 +80,13 @@
       <input class="form-control" type="number" name="estvalue" formControlName="estvalue" placeholder="Est. Value" step="1" min="0">
       <small id="addItemEstValueTip" class="form-text text-muted">Round to the nearest whole number.</small>
     </div>
-    
+
+    <div class="form-group col-3">
+      <label for="addItemHazardCode">Hazard Code</label>
+      <input class="form-control" type="text" name="hazardCode" formControlName="hazardCode" placeholder="Hazard Code">
+      <small id="addItemHazardCodeTip" class="form-text text-muted">Code is only needed for hazardous items</small>
+    </div>
+
     <div style="padding-left: 20px;">
       <button class="btn btn-primary" type="submit" [disabled]="!addItemForm.valid"><i class="fa fa-floppy-o"></i> Add</button>
       <button class="btn btn-warning" (click)="cancelAddNew()"><i class="fa fa-times"></i> Cancel</button>
@@ -102,14 +112,20 @@
     </div>
     <div class="form-group col-3">
       <label for="editItemEstValue">Estimate Value</label>
-      <input class="form-control" type="number" name="editItemEstValue" [(ngModel)]="item.estvalue" formControlName="estvalue" 
+      <input class="form-control" type="number" name="editItemEstValue" [(ngModel)]="item.estvalue" formControlName="estvalue"
         placeholder="Est. Value" step="1" min="0" aria-describedby="addItemEstValueTip">
       <small id="editItemEstValueTip" class="form-text text-muted">Round to the nearest whole number.</small>
     </div>
-    
+
+    <div class="form-group col-3">
+      <label for="editItemHazardCode">Hazard Code</label>
+      <input class="form-control" [(ngModel)]="item.hazardCode" type="text" name="hazardCode" formControlName="hazardCode" placeholder="Hazard Code">
+      <small id="editItemHazardCodeTip" class="form-text text-muted">Code is only needed for hazardous items</small>
+    </div>
+
     <div style="padding-left: 20px;">
       <button class="btn btn-primary" type="submit" [disabled]="!editItemForm.valid"><i class="fa fa-floppy-o"></i> Save</button>
       <button class="btn btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i> Cancel</button>
-    </div>   
+    </div>
   </form>
 </div>
