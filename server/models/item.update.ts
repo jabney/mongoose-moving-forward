@@ -5,12 +5,12 @@ function itemUpdateHelper(req, res) {
 
   if (req.body.estvalue >= 200) {
     Item.schema.add({
-      requiredInsurance: { type: Boolean, default: true }
+      requiresInsurance: { type: Boolean, default: true }
     })
   } else {
-    Item.schema.remove('requiredInsurance')
-    if (req.body.requiredInsurance) {
-      req.body.requiredInsurance = false
+    Item.schema.remove('requiresInsurance')
+    if (req.body.requiresInsurance) {
+      req.body.requiresInsurance = false
     }
   }
 
@@ -24,10 +24,10 @@ function itemUpdateHelper(req, res) {
      * This code from the Module 6 Demo video didn't work
      * as intended. The 'add' method updates the original schema
      * and doesn't return a value. It ended up just adding
-     * 'requiredInsurance' to the Item schema in perpetuity.
+     * 'requiresInsurance' to the Item schema in perpetuity.
      */
     // const insuredItemSchema = Item.schema.add({
-    //   requiredInsurance: { type: Boolean, default: true }
+    //   requiresInsurance: { type: Boolean, default: true }
     // }) as any
 
     /**
